@@ -1,0 +1,28 @@
+```plantuml
+@startuml flex
+    skinparam class {
+	BackgroundColor White
+	ArrowColor Black
+	BorderColor Black
+	
+}
+activate Client
+Client -> AbstractFactory: createFactory()
+activate AbstractFactory
+AbstractFactory -> ConcreteFactory1: new
+activate ConcreteFactory1
+Client <-- AbstractFactory: return ConcreteFactory
+Client -> ConcreteFactory1: createProductA()
+ConcreteFactory1 -> ConcreteProductA:new 
+activate ConcreteProductA
+Client <-- ConcreteProductA: return this
+deactivate ConcreteProductA
+deactivate ConcreteFactory1
+
+
+
+
+
+@enduml
+
+```

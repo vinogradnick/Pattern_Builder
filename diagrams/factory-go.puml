@@ -1,0 +1,173 @@
+
+
+```plantuml
+@startuml factory-go
+
+    
+    skinparam class {
+	BackgroundColor White
+	ArrowColor Black
+	BorderColor Black
+	
+}
+
+    interface GdiFactory{
+        createButton() Button
+        createMenu() Menu
+        createScroll() Scroll
+
+    }
+    class IOSFactory{
+        createButton() Button
+        createMenu() Menu
+        createScroll() Scroll
+    }
+    class AndroidFactory{
+        createButton() Button
+        createMenu() Menu
+        createScroll() Scroll
+    }
+    interface Button{
+        click() void
+    }
+    interface Menu{
+        selectItem() void
+    }
+    interface Scroll{
+        scroll() void
+    }
+    enum Platforms{
+        ANDROID_PLATFORM
+        IOS_PLATFORM
+    }
+    class IOSButton{
+        click() void
+    }
+    class AndroidButton{
+        click() void
+    }
+   
+    class AndroidMenu{
+        selectItem() void
+    }
+    class AndroidScroll{
+        scroll() void
+    }
+    class IOSMenu{
+        selectItem() void
+    }
+    class IOSScroll{
+        scroll() void
+    }
+    class Instance{
+        +platformItems  List<Button>
+    }
+    class Singleton{
+        +instance Instance
+        GetInstance() Instance
+
+    }
+    class GdiConfigurator{
+        +Button Button 
+        +Scroll Scroll
+        +Menu Menu
+        Load() void
+    }
+
+    GdiFactory <|-- IOSFactory
+    GdiFactory <|-- AndroidFactory
+        '-------------------------------'
+
+    Button <|-- IOSButton
+    Button <|-- AndroidButton
+        '-------------------------------'
+
+    Menu <|-- IOSMenu
+    Menu <|-- AndroidMenu
+        '-------------------------------'
+
+    Scroll <|-- IOSScroll
+    Scroll <|-- AndroidScroll
+        '-------------------------------'
+
+    GdiConfigurator ..> Button
+    GdiConfigurator ..> Menu
+    GdiConfigurator ..> Scroll
+        '-------------------------------'
+
+    Singleton <|-- Singleton
+    Singleton ..> Instance
+        '-------------------------------'
+
+    IOSFactory ..> IOSButton
+    IOSFactory ..>IOSScroll
+    IOSFactory ..> IOSMenu
+    '-------------------------------'
+    AndroidFactory ..> AndroidButton
+    AndroidFactory ..>AndroidMenu
+    AndroidFactory ..>AndroidScroll
+    GdiConfigurator ..>GdiFactory
+
+@enduml
+```
+
+
+### Flex
+
+```plantuml
+@startuml
+  skinparam class {
+	BackgroundColor White
+	ArrowColor Black
+	BorderColor Black
+	
+}
+Client -> GdiFactory: create AndroidFactory
+activate Client
+activate GdiFactory
+
+GdiFactory -> AndroidFactory: new
+activate AndroidFactory
+
+Client <-- GdiFactory: return AndroidFactory
+Client -> AndroidFactory: createButton()
+AndroidFactory -> Button: new
+activate Button
+Client <-- Button: click()
+deactivate Button
+
+Client -> GdiFactory: create IOSFactory
+GdiFactory -> IOSFactory: new
+activate IOSFactory
+Client <-- GdiFactory: return IOSFactory
+Client -> IOSFactory: createMenu()
+
+IOSFactory -> Menu: new
+activate Menu
+Client <-- Menu: selectItem()
+deactivate Menu
+
+
+@enduml
+```
+
+#### Singleton
+
+
+```plantuml
+@startuml
+  skinparam class {
+	BackgroundColor White
+	ArrowColor Black
+	BorderColor Black
+	
+}
+Client -> Singleton: getInstance()
+Activate Client
+activate Singleton
+Singleton -> Instance : new
+activate Instance
+Singleton --> Client: return instance
+deactivate Instance
+@enduml
+```

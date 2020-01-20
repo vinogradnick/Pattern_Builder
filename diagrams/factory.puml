@@ -1,0 +1,67 @@
+```plantuml
+@startuml flex
+    skinparam class {
+	BackgroundColor White
+	ArrowColor Black
+	BorderColor Black
+	
+}
+interface AbstarctFactory{
+	createProductA() : AbstractProductA
+	createProductB() : AbstractProductB
+}
+class ConcreteFactory1 {
+	createProductA() : ConcreteProduct1A
+	createProductB() : ConcreteProduct1B
+}
+class ConcreteFactory2{
+	createProductA() : ConcreteProduct2A
+	createProductB() : ConcreteProduct2B
+}
+class AbstractProductA{
+}
+class AbstractProductB{
+}
+class ConcreteProduct1A{
+}
+class ConcreteProduct1B{
+}
+class ConcreteProduct2A{
+}
+class ConcreteProduct2B{
+}
+class Client{
+
+}
+
+' --------------------------------------- '
+
+AbstarctFactory <|-- ConcreteFactory1
+AbstarctFactory <|-- ConcreteFactory2
+' --------------------------------------- '
+
+AbstractProductA <|-- ConcreteProduct1A
+AbstractProductA <|-- ConcreteProduct2A
+' --------------------------------------- '
+
+AbstractProductB <|-- ConcreteProduct1B
+AbstractProductB <|-- ConcreteProduct2B
+' --------------------------------------- '
+
+
+ConcreteFactory1 ..>  ConcreteProduct1A
+ConcreteFactory1 ..>  ConcreteProduct1B
+' --------------------------------------- '
+ConcreteFactory2 ..>  ConcreteProduct2A
+ConcreteFactory2 ..>  ConcreteProduct2B
+' --------------------------------------- '
+
+Client ..> AbstarctFactory
+Client ..> AbstractProductA
+Client ..> AbstractProductB 
+
+
+
+@enduml
+
+```

@@ -1,0 +1,36 @@
+```plantuml
+@startuml seq-go
+  skinparam class {
+	BackgroundColor White
+	ArrowColor Black
+	BorderColor Black
+	
+}
+GdiConfigurator -> GdiFactory: createAndroidFactory()
+activate GdiConfigurator
+activate GdiFactory
+
+GdiFactory -> AndroidFactory: new
+activate AndroidFactory
+
+GdiConfigurator <-- GdiFactory: return AndroidFactory
+GdiConfigurator -> AndroidFactory: createButton()
+AndroidFactory -> Button: new
+activate Button
+GdiFactory <-- Button: return Button
+deactivate Button
+
+GdiConfigurator -> GdiFactory: createIOSFactory()
+GdiFactory -> IOSFactory: new
+activate IOSFactory
+GdiConfigurator <-- GdiFactory: return IOSFactory
+GdiConfigurator -> IOSFactory: createMenu()
+
+IOSFactory -> Menu: new
+activate Menu
+GdiConfigurator <-- Menu: selectItem()
+deactivate Menu
+
+
+@enduml
+```
